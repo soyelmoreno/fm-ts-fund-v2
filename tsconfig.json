@@ -6,7 +6,13 @@
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
     "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "noUnusedParameters": false,
+    "noImplicitAny": false
   },
-  "include": ["examples/*/src", "challenges/*/src", "notes", "examples/hello-ts/tsconfig.json"]
+  "include": [
+    "examples/*/src",
+    "challenges/*/src",
+    "notes",
+    "examples/hello-ts/tsconfig.json"
+  ]
 }
