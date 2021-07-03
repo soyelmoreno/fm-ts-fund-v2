@@ -3,18 +3,21 @@
 - Step 1. Rename file from .js to .ts. Set the Typescript compiler in a very loose
   mode until we can get things passing. tsconfig --> "noImplicitAny": false (we
   wish to allow them for now)
-- Step 2.
-- Step 3.
+- Step 2. Now we can forbid implicit anys. Make them explicit. Run tests
+- Step 3. Enable strict mode. Clean up.
 - Step 4. Make sure tests pass.
 */
-export class AddressBook {
-  contacts = [];
 
-  addContact(contact) {
+import { kill } from "process";
+
+export class AddressBook {
+  contacts: Person[] = [];
+
+  addContact(contact: Person) {
     this.contacts.push(contact);
   }
 
-  findContactByName(filter) {
+  findContactByName(filter: { firstName?: string; lastName?: string }) {
     return this.contacts.filter((c) => {
       if (
         typeof filter.firstName !== "undefined" &&
@@ -33,17 +36,38 @@ export class AddressBook {
   }
 }
 
-export function formatDate(date) {
+export function formatDate(date: Date) {
   return date.toISOString().replace(/[-:]+/g, "").split(".")[0] + "Z";
 }
 
-function getFullName(contact) {
+function getFullName(contact: Person) {
   return [contact.firstName, contact.middleName, contact.lastName]
     .filter(Boolean)
     .join(" ");
 }
 
-export function getVcardText(contact, date = new Date()) {
+interface Person {
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
+  salutation?: string;
+  email?: string;
+  phones: {
+    [k: string]: string;
+  };
+  addresses: {
+    [k: string]: {
+      houseNumber: number;
+      street: string;
+      city: string;
+      state: string;
+      postalCode: number;
+      country: string;
+    };
+  };
+}
+
+export function getVcardText(contact: Person, date = new Date()) {
   const parts = [
     "BEGIN:VCARD",
     "VERSION:2.1",
