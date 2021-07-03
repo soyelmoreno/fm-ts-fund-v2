@@ -168,22 +168,22 @@ phoneDict.mobile; // MAYBE present
  * (7) Type aliases are initialized synchronously, so self-referential stuff is 👎
  */
 
-// type NumberVal = 1 | 2 | 3 | NumberArr;
-// type NumberArr = NumberVal[];
+type NumberVal = 1 | 2 | 3 | NumberArr;
+type NumberArr = NumberVal[];
 
 /**
  * (8) Interfaces are initialized lazily, so combining it
  * -   w/ a type alias allows for recursive types!
  */
 
-// type StringVal = "a" | "b" | "c" | StringArr;
+type StringVal = "a" | "b" | "c" | StringArr;
 
-// // type StringArr = StringVal[];
-// interface StringArr {
-//   // arr[0]
-//   [k: number]: "a" | "b" | "c" | StringVal[];
-// }
+// type StringArr = StringVal[];
+interface StringArr {
+  // arr[0]
+  [k: number]: "a" | "b" | "c" | StringVal[];
+}
 
-// const x: StringVal = Math.random() > 0.5 ? "b" : ["a"]; // ✅ ok!
+const x: StringVal = Math.random() > 0.5 ? "b" : ["a"]; // ✅ ok!
 
 export default {};
